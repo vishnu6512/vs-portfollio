@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #1e1e1e;
+  --foreground: #cccccc;
+  --header: #3c3c3c;
+  --sidebar: #252526;
+  --sidebar-hover: rgba(255, 255, 255, 0.1);
+  --editor: #1e1e1e;
+  --tab-bar: #252526;
+  --tab-inactive: #2d2d2d;
+  --tab-active: #1e1e1e;
+  --tab-text: #969696;
+  --tab-active-text: #ffffff;
+  --icon: #858585;
+  --icon-hover: #c5c5c5;
+  --footer: #007acc;
+  --footer-text: #ffffff;
+  --scrollbar-thumb: #424242;
+  --scrollbar-track: #1e1e1e;
+  --line-number: #858585;
+  --selection-background: #264f78;
+  --border-color: #404040;
+}
+
+.light {
+  --background: #ffffff;
+  --foreground: #333333;
+  --header: #f3f3f3;
+  --sidebar: #f3f3f3;
+  --sidebar-hover: #e8e8e8;
+  --editor: #ffffff;
+  --tab-bar: #f3f3f3;
+  --tab-inactive: #ececec;
+  --tab-active: #ffffff;
+  --tab-text: #616161;
+  --tab-active-text: #333333;
+  --icon: #5a5a5a;
+  --icon-hover: #000000;
+  --footer: #007acc;
+  --footer-text: #ffffff;
+  --scrollbar-thumb: #c5c5c5;
+  --scrollbar-track: #f3f3f3;
+  --line-number: #237893;
+  --selection-background: #add6ff;
+  --border-color: #e5e5e5;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 7px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track);
+}
+
+::selection {
+  background-color: var(--selection-background);
+}
