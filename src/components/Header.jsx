@@ -1,7 +1,9 @@
 import React from 'react'
-import { Menu, Search, Settings, Minus, Square, X } from 'lucide-react'
+import { Menu, Search, Settings, Minus, Square, X, Sun, Moon } from 'lucide-react'
+import { useTheme } from './ThemeProvider'
 
 function Header({ toggleSidebar }) {
+  const { theme, toggleTheme } = useTheme()
   const menuItems = ['File', 'Edit', 'Selection', 'View', 'Go', 'Run', 'Terminal', 'Help']
 
   return (
@@ -28,6 +30,13 @@ function Header({ toggleSidebar }) {
             className="bg-transparent border-none outline-none w-48 px-2 py-1 text-sm"
           />
         </div>
+        <button 
+          onClick={toggleTheme} 
+          className="hover:bg-[#ffffff1a] p-1.5"
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+        </button>
         <button className="hover:bg-[#ffffff1a] p-1.5">
           <Settings size={14} />
         </button>

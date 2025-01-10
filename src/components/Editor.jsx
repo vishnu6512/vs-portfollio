@@ -3,7 +3,6 @@ import { X } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from './ThemeProvider'
-import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Editor({ activeTab, setActiveTab }) {
   const { theme } = useTheme()
@@ -31,21 +30,6 @@ console.log("Let's connect and create something amazing together!");`, language:
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
-.skill {
-  margin: 10px;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #007acc;
-  color: white;
-  font-weight: bold;
-  transition: transform 0.3s ease;
-}
-
-.skill:hover {
-  transform: scale(1.1);
-}
-
 .languages { background-color: #f7df1e; color: black; }
 .frameworks { background-color: #61dafb; }
 .ai-ml { background-color: #FF6F61; }
@@ -182,45 +166,41 @@ I'm always open to new opportunities, collaborations, or just a friendly chat ab
 *"The only way to do great work is to love what you do."* - Steve Jobs`, language: 'markdown' },
   ]
 
+  const currentTab = tabs.find(tab => tab.name === activeTab)
+
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       <div className="flex bg-tab-bar text-tab-text text-xs border-b border-border-color">
-        <AnimatePresence>
-          {tabs.map((tab) => (
-            <motion.button
-              key={tab.name}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.1 }}
-              onClick={() => setActiveTab(tab.name)}
-              className={`
-                px-4 py-2 flex items-center gap-2 border-r border-border-color
-                ${activeTab === tab.name 
-                  ? 'bg-tab-active text-tab-active-text' 
-                  : 'bg-tab-inactive hover:bg-tab-active/50'
+        {tabs.map((tab) => (
+          <button
+            key={tab.name}
+            onClick={() => setActiveTab(tab.name)}
+            className={`
+              px-4 py-2 flex items-center gap-2 border-r border-border-color
+              ${activeTab === tab.name 
+                ? 'bg-tab-active text-tab-active-text' 
+                : 'bg-tab-inactive hover:bg-tab-active/50'
+              }
+            `}
+          >
+            <span>{tab.name}</span>
+            <X
+              size={14}
+              className="hover:opacity-100 opacity-0"
+              onClick={(e) => {
+                e.stopPropagation()
+                if (tabs.length > 1) {
+                  const newTab = tabs.find(t => t.name !== tab.name)
+                  if (newTab) setActiveTab(newTab.name)
                 }
-              `}
-            >
-              <span>{tab.name}</span>
-              <X
-                size={14}
-                className="opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  if (tabs.length > 1) {
-                    const newActiveTab = tabs.find(t => t.name !== tab.name)?.name
-                    if (newActiveTab) setActiveTab(newActiveTab)
-                  }
-                }}
-              />
-            </motion.button>
-          ))}
-        </AnimatePresence>
+              }}
+            />
+          </button>
+        ))}
       </div>
       <div className="flex-1 overflow-auto bg-editor">
         <SyntaxHighlighter
-          language={tabs.find(tab => tab.name === activeTab)?.language}
+          language={currentTab?.language}
           style={theme === 'dark' ? vscDarkPlus : vs}
           customStyle={{ 
             background: 'transparent', 
@@ -232,7 +212,7 @@ I'm always open to new opportunities, collaborations, or just a friendly chat ab
           showLineNumbers={true}
           lineNumberStyle={{ color: 'var(--line-number)' }}
         >
-          {tabs.find(tab => tab.name === activeTab)?.content || ''}
+          {currentTab?.content || ''}
         </SyntaxHighlighter>
       </div>
     </div>
